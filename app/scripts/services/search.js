@@ -20,8 +20,12 @@
             function getEvidenceCollection(setting, cb, additionalFilters) {
 
                 function _success(responseData, statusString, request) {
-                    console.log(responseData);
-                    cb(responseData.evidence, responseData.facets);
+                    if (responseData !== null) {
+                        cb(responseData.evidence, responseData.facets, statusString);
+                    } else {
+                        cb(null, null, statusString);
+                    }
+
                 }
 
                 function _error(request, errorString, exception) {

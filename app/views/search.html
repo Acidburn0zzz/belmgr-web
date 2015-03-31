@@ -29,13 +29,14 @@
             </div>
         </div>
         <div class="col-xs-10">
+            <p>Query status: {{message}}</p>
             <h2>Results ({{currentPosition}}-{{currentPosition+100}})</h2>
             <button class="btn btn-primary" data-ng-click="getEvidenceCollectionPrev()">prev</button>
             <button class="btn btn-primary pull-right" data-ng-click="getEvidenceCollectionNext()">next</button>
             <hr>
             <table class="table table-striped">
                 <tbody>
-                    <tr data-ng-repeat="evidence in evidenceCollection | filter: {bel_statement: searchQuery}" data-ng-click="showDetail($index)" class="tr-hover">
+                    <tr data-ng-repeat="evidence in evidenceCollection" data-ng-click="showDetail($index)" class="tr-hover">
                         <td>
                             {{$index + 1}}&nbsp;&nbsp;&nbsp;{{evidence.bel_statement}}
                             <div data-ng-if="displayDetail[$index]" evidence-detail></div>

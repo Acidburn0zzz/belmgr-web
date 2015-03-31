@@ -36,7 +36,15 @@
 
             function createFilterOptions() {
                 var filterOptions = null;
-                $scope.additionalFilters = $scope.selectedFacets;
+                if ($scope.searchQuery.length !== 0) {
+                    var filter = belhop.factory.options.filter.custom('fts', 'search', $scope.searchQuery);
+                    $scope.selectedFacets.push(filter);
+                    $scope.additionalFilters = angular.copy($scope.selectedFacets);
+                    $scope.selectedFacets.splice($scope.selectedFacets.indexOf(filter), 1);
+                } else {
+                    $scope.additionalFilters = $scope.selectedFacets;
+                }
+
                 return filterOptions;
             }
 
@@ -56,12 +64,15 @@
                 searchService.getEvidenceCollection($scope.evidenceSetting, updateResult, $scope.additionalFilters);
             };
 
-            function updateResult(collection, facets) {
+            function updateResult(collection, facets, statusString) {
+                $scope.message = statusString;
                 $scope.evidenceCollection = collection;
-                $scope.$digest(['$scope.evidenceCollection', '$scope.facetsSet']);
+                $scope.$digest(['$scope.evidenceCollection', '$scope.facetsSet', '$scope.message']);
             }
 
-            function loadEvidence(collection, facets) {
+            function loadEvidence(collection, facets, statusString) {
+                console.log(statusString);
+                $scope.message = statusString;
                 $scope.evidenceCollection = collection;
                 $scope.facetsSet = [];
 
@@ -92,7 +103,7 @@
                 });
 
                 $scope.facetsSet.push(species, status);
-                $scope.$digest(['$scope.evidenceCollection', '$scope.facetsSet']);
+                $scope.$digest(['$scope.evidenceCollection', '$scope.facetsSet', '$scope.message']);
             }
 
             $scope.selectedFacets = [];
@@ -117,7 +128,6 @@
             };
 
             $scope.searchEvidence = function() {
-                // create new search options
                 $scope.evidenceSetting = new evidenceSetting();
                 searchService.getEvidenceCollection($scope.evidenceSetting, updateResult, $scope.additionalFilters);
             };
