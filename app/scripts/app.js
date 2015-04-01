@@ -46,6 +46,10 @@
           templateUrl: 'views/bel-edit.html',
           controller: 'EvidenceController'
         })
+        .when('/bel', {
+          templateUrl: 'views/bel-edit.html',
+          controller: 'EvidenceController'
+        })
         .when('/help', {
           templateUrl: 'views/help.html',
           controller: 'HelpController'

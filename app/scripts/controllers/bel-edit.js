@@ -9,15 +9,18 @@
    * Controller of the belmgrWebApp
    */
   angular.module('belmgrWebApp')
-    .controller('EvidenceController', ['$scope', 'modelNewBel', '$routeParams', function($scope, modelNewBel, $routeParams) {
+    .controller('EvidenceController',
+                ['$scope', 'modelNewBel', '$routeParams',
+                function($scope, modelNewBel, $routeParams) {
 
-      if $routeParams.belUri {
+      console.log('Test')
+      if ($routeParams.belUri) {
         var onSucc = function(response, status, xhr) {
           $scope.modelNewBel = response[0];
         }
 
         var onErr = function(xhr) {
-          console.log('onErr cb', xhr)
+          console.log('onErr cb', xhr);
         }
         var cb = belhop.factory.callback(onSucc, onErr)
 
