@@ -42,9 +42,9 @@
           templateUrl: 'views/search.html',
           controller: 'SearchController'
         })
-        .when('/newbel', {
+        .when('/bel/:belUri', {
           templateUrl: 'views/bel-edit.html',
-          controller: 'NewEvidenceController'
+          controller: 'EvidenceController'
         })
         .when('/help', {
           templateUrl: 'views/help.html',

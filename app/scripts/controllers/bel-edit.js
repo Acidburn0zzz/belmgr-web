@@ -9,9 +9,22 @@
    * Controller of the belmgrWebApp
    */
   angular.module('belmgrWebApp')
-    .controller('NewEvidenceController', ['$scope', 'modelNewBel', function($scope, modelNewBel) {
+    .controller('EvidenceController', ['$scope', 'modelNewBel', '$routeParams', function($scope, modelNewBel, $routeParams) {
 
-      $scope.modelNewBel = '';
+      if $routeParams.belUri {
+        var onSucc = function(response, status, xhr) {
+          $scope.modelNewBel = response[0];
+        }
+
+        var onErr = function(xhr) {
+          console.log('onErr cb', xhr)
+        }
+        var cb = belhop.factory.callback(onSucc, onErr)
+
+        belUri = $routeParams.belUri;
+        $scope.modelNewBel = belhop.evidence.get(belUri, cb)
+      }
+      else {$scope.modelNewBel = '';}
 
       // the model data that will be sent to the server
       $scope.belStatement = modelNewBel.belStatement;
